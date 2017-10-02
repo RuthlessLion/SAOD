@@ -10,77 +10,78 @@ struct Vertex{
     Vertex *Right;
 };Vertex *ROOT;
 
-void output_tree(Vertex *p);
-void searchkeyx(Vertex *p, int x, int countt);
-void random_tree_search_double_indirection(int d, Vertex *&ROOT);
+int summ(Vertex* p);
+int height(Vertex* p);
+int sizetree (Vertex *p);
+void outputtree(Vertex *p);
+void searchkeyx(Vertex *p, int x);
 void randAddDouble (int d, Vertex *&ROOT);
 void RandAddRecursion(int d,Vertex *p);
+int heightMid(Vertex* p,int L);
 
 int main() {
     srand(time(0));
-    int countt;
-    int woodSize = 10;
-    int randd[woodSize];
-    for (int j = 0; j < woodSize; ++j) {
-        randd[j] = 1 + rand() % 10;
-        cout<<randd[j];
-    }
+    int woodSize= 10;
+    int searchkey = 10;
     for (int i = 0; i < woodSize; ++i) {
-        cout<<" HUI ";
-        randAddDouble(randd[i],ROOT);
+        randAddDouble(1 + rand() % 10,ROOT);
 
     }
-    output_tree(ROOT);
-    searchkeyx(ROOT,2,countt);
+    outputtree(ROOT);
+    searchkeyx(ROOT,11);
+    cout << "Size: "<< sizetree(ROOT)<<endl;
+    cout << "Height: "<<height(ROOT)<<endl;
+    cout << "HeightMid: "<<heightMid(ROOT,1)/sizetree(ROOT)<<endl;
+    cout << "Mid: "<<summ(ROOT)<<endl;
+    sizetree(ROOT);
     system("pause");
     return 0;
 }
-
-
-void output_tree(Vertex *p){
-    if(p != NULL){
-        output_tree(p->Left);
-        cout<< p->Data<<endl;
-        output_tree(p->Right);
-    }
-};
-
-void searchkeyx(Vertex *p, int x, int count){
-    if(p != NULL){
-        searchkeyx (p->Left,x,count);
-        if (p->Data == x){cout <<"count = "<<count<<" found "<<x<<endl;}
-        count += 1;
-        searchkeyx (p->Right,x,count);
-    } else {
-        cout << "hello";
-    }
-};
-
-void random_tree_search_double_indirection(int d, Vertex *&ROOT){
-    Vertex **p = &ROOT;
-    while(*p){
-        if(d < (*p)->Data){
-            p = &(*p)->Left;
-        } else if(d > (*p)->Data){
-            p = &(*p)->Right;
-        }else if (d == (*p)->Data) {
-            return;};
-    }
-    if(!(*p)){
-        if(d == (*p)->Data){
-            p = &(*p)->Right;
-        (*p) = new Vertex;
-        (*p)->Data = d;
-        (*p)->Left = NULL;
-        (*p)->Right = NULL;
-    }
-};
+int summ(Vertex* p){
+    if(!(p)){ return 0;}
+    else return (p->Data+summ(p->Left)+summ(p->Right));
 }
+int height(Vertex* p){
+    int l, r, h = 0;
+    if(!(p)){ return 0;}else{
+        l = height(p->Left);
+        r = height(p->Right);
+        h = ((l > r) ? l : r) + 1;
+    }
+    return h;
+}
+int heightMid(Vertex* p,int L){
+    if(!(p)){ return 0;}
+    else { return (L+heightMid(p->Left,L+1)+heightMid(p->Right,L+1));};
+}
+
+void outputtree(Vertex *p){
+    if(p){
+        outputtree(p->Left);
+        cout<< p->Data<<endl;
+        outputtree(p->Right);
+    }
+};
+
+int sizetree (Vertex *p){
+    int size;
+    if (!(p)) return 0;
+    else return(1 + sizetree(p->Left) + sizetree(p->Right));
+};
+
+void searchkeyx(Vertex *p, int x){
+    if(p){
+        searchkeyx (p->Left,x);
+        if (p->Data == x){cout<<" found "<<x<<endl;}
+        searchkeyx (p->Right,x);
+    };
+};
 void randAddDouble (int d, Vertex *&ROOT){
     Vertex **p = &ROOT;
     while(*p) {
         if (d < (*p)->Data) p = &(*p)->Left;
         else if (d > (*p)->Data) p = &(*p)->Right;
+        else if (d == (*p)->Data) p = &(*p)->Right;
     }
     if(!(*p)) {
         (*p) = new Vertex,
@@ -89,5 +90,5 @@ void randAddDouble (int d, Vertex *&ROOT){
     }
 }
 void RandAddRecursion(int d,Vertex *p){
-    if (p == NULL);
+    if (!(p));
 };
