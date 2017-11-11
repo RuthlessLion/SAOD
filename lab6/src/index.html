@@ -1,0 +1,23 @@
+{{ define "index" }}
+<html>
+<head>
+	<title>Hello World</title>
+	<script src="sigma.min.js"></script>
+	<script src="sigma.parsers.json.min.js"></script>
+</head>
+<body>
+	<script>
+	sigma.parsers.json('data.json', {
+		container: 'container',
+		settings: {
+			defaultNodeColor: '#ec5148'
+		}
+	});
+	</script>
+	<h1>Кол-во щелчков: {{.}}</h1>
+	<form action="/i">
+		<button>+1</button>
+	</form>
+</body>
+</html>
+{{ end }}

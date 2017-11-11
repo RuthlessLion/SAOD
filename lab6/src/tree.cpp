@@ -1,17 +1,13 @@
 #include <iostream>
 #include <ctime>
+#include <cstdlib>
+#include <stdio.h>
+#include "include/json.h"
 
 using namespace std;
 
 bool VR; // VerticalRost
 bool HR; // HorizontalRost
-
-struct tree{
-    int bal;
-    int data;
-    tree *l;
-    tree *r;
-};
 
 int summ(tree* p){
     if(!(p)){ return 0;}
@@ -43,10 +39,10 @@ void print_struct (tree *m){
 
 void B2INSERT (int data, tree *&p) {
     tree *q;
-    if (p == nullptr) {
+    if (p == NULL) {
         p = new tree;
         p->data = data;
-        p->l = p->r = nullptr;
+        p->l = p->r = NULL;
         p->bal = 0;
         VR = true;
     } else {
@@ -105,20 +101,20 @@ void ClearTree(tree *S){
 }
 
 int main(){
-    int n = 100,numb;
-    srand (time(nullptr));
-    tree *h = nullptr;
+    int n = 1000,numb;
+    srand (time(NULL));
+    tree *h = NULL;
     VR = HR = true;
     for(int i = 0; i < n; i++){
         numb = rand()%1000;
         cout << numb << " ";
         B2INSERT (numb, h);
     }
-    cout <<endl<<"Sort:";
+    cout << endl << "Sort:";
     print_struct (h);
-    cout << "Size: "<<sizetree(h)<<endl;
-    cout << "Height: "<<height(h)<<endl;
-    cout << "HeightMid: "<<(float)heightMid(h,1)/sizetree(h)<<endl;
-    cout << "Mid: "<<summ(h)<<endl;
-    system ("pause");
+    cout << endl << "Size: "<< sizetree(h)<<endl;
+    cout << "Height: "<< height(h)<<endl;
+    cout << "HeightMid: "<< (float)heightMid(h,1)/sizetree(h) << endl;
+    cout << "Mid: " << summ(h) << endl;
+    GraphBintree(h);
 }
